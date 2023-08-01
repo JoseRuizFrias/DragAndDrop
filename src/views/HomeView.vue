@@ -61,13 +61,14 @@
           <draggable
             :list="anyDropped"
             item-key="id"
+            :clone="insertAny(anyDropped)"
             :group="{ name: 'myGroup', pull: true, put: true }"
             :emptyInsertThreshold="150"
           >
-            <template #item="{ element: item }">
+            <template #item="{ element }">
               <div class="container__drop--iconbox">
                 <div class="container__drop--icontext">
-                  <img :src="item.img" /> <a>{{ item.type }}</a>
+                  <img :src="element.img" /> <a>{{ element.type }}</a>
                 </div>
               </div></template
             >
@@ -82,15 +83,15 @@
           >
           <draggable
             :list="textDropped"
-            :clone="insertText(textDropped)"
             item-key="id"
+            :clone="insertText(textDropped)"
             :group="{ name: 'myGroup', pull: true, put: true }"
             :emptyInsertThreshold="150"
           >
-            <template #item="{ element: item }">
+            <template #item="{ element }">
               <div class="container__drop--iconbox">
                 <div class="container__drop--icontext">
-                  <img :src="item.img" /> <a>{{ item.type }}</a>
+                  <img :src="element.img" /> <a>{{ element.type }}</a>
                 </div>
               </div></template
             >
@@ -117,31 +118,55 @@ export default defineComponent({
   data: function () {
     return {
       icons: [
-        { type: "Text", img: textIcon, id: 1 },
-        { type: "Image", img: imageIcon, id: 2 },
-        { type: "Table", img: tableIcon, id: 3 },
+        { type: "Text", img: textIcon, originBox: "", id: 1 },
+        { type: "Image", img: imageIcon, originBox: "", id: 2 },
+        { type: "Table", img: tableIcon, originBox: "", id: 3 },
       ],
       textDropped: [],
       imageDropped: [],
       anyDropped: [],
-      removeIndex: 0,
     };
   },
   methods: {
     insertImage(iconElements) {
       iconElements.forEach((element, index) => {
-        if (element.type !== "Image") {
+        if (element.id !== 2) {
           iconElements.splice(index, 1);
-        }
+          switch (element.originBox) {
+            case "textbox":
+              this.textDropped.push(element);
+              break;
+            case "anybox":
+              this.anyDropped.push(element);
+              break;
+            default:
+              break;
+          }
+        } else element.originBox = "imagebox";
+      });
+    },
+
+    insertAny(iconElements) {
+      iconElements.forEach((element) => {
+        element.originBox = "anybox";
       });
     },
 
     insertText(iconElements) {
       iconElements.forEach((element, index) => {
-        if (element.type !== "Text") {
+        if (element.id !== 1) {
           iconElements.splice(index, 1);
-          this.removeIndex = index;
-        }
+          switch (element.originBox) {
+            case "imagebox":
+              this.imageDropped.push(element);
+              break;
+            case "anybox":
+              this.anyDropped.push(element);
+              break;
+            default:
+              break;
+          }
+        } else element.originBox = "textbox";
       });
     },
 
