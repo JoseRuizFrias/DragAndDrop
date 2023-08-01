@@ -118,9 +118,9 @@ export default defineComponent({
   data: function () {
     return {
       icons: [
-        { type: "Text", img: textIcon, originBox: "", id: 1 },
-        { type: "Image", img: imageIcon, originBox: "", id: 2 },
-        { type: "Table", img: tableIcon, originBox: "", id: 3 },
+        { type: "Text", img: textIcon, id: 1 },
+        { type: "Image", img: imageIcon, id: 2 },
+        { type: "Table", img: tableIcon, id: 3 },
       ],
       textDropped: [],
       imageDropped: [],
