@@ -40,7 +40,7 @@
             item-key="id"
             :clone="insertImage(imageDropped)"
             :group="{ name: 'myGroup', pull: true, put: true }"
-            :emptyInsertThreshold="150"
+            :emptyInsertThreshold="175"
           >
             <template #item="{ element }">
               <div class="container__drop--iconbox">
@@ -63,7 +63,7 @@
             item-key="id"
             :clone="insertAny(anyDropped)"
             :group="{ name: 'myGroup', pull: true, put: true }"
-            :emptyInsertThreshold="150"
+            :emptyInsertThreshold="175"
           >
             <template #item="{ element }">
               <div class="container__drop--iconbox">
@@ -86,7 +86,7 @@
             item-key="id"
             :clone="insertText(textDropped)"
             :group="{ name: 'myGroup', pull: true, put: true }"
-            :emptyInsertThreshold="150"
+            :emptyInsertThreshold="175"
           >
             <template #item="{ element }">
               <div class="container__drop--iconbox">
